@@ -7,5 +7,11 @@ class CellSpec extends AnyFunSpec with Matchers {
     it("A7 should have column number 3") {
       Cell('A', 7).cellNumber shouldBe (1, 7)
     }
+
+    it("should create cell from column number") {
+      val (cellNumber, _) = Cell('A', 3).cellNumber
+
+      Cell(cellNumber,3).cellNumber shouldBe Cell('A', 3).cellNumber
+    }
   }
 }
