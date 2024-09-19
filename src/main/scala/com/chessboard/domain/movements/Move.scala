@@ -1,30 +1,24 @@
 package com.chessboard.domain.movements
 
-import cats.kernel.{Monoid, Semigroup}
-import com.chessboard.domain.{Cell, Direction, East, North, NorthEast, NorthWest, South, SouthEast, SouthWest, West}
+import com.chessboard.domain._
 
-/*case class DirectionalMove(direction: Direction, steps: Int)
-case object DirectionalMove {
-  implicit val directionalMoveSemigroup = new Semigroup[DirectionalMove] {
 
-    override def combine(x: DirectionalMove, y: DirectionalMove): DirectionalMove =
-      x.direction.towardsBy(x.steps) andThen y.direction.towardsBy(y.steps)
-  }
-}*/
-sealed trait Movement {
-  def towards: Int => List[Cell => Cell]
+sealed trait Move {
+  def shift(steps: Int, initial: Cell): List[Cell]
 }
-case object HorizontalMovement extends Movement {
-  val towards = (steps: Int) => List(East.towardsBy(steps), West.towardsBy(steps))
+case object HorizontalMove extends Move {
+  def shift(steps: Int, initial: Cell) = List(East.towardsBy(steps)(initial), West.towardsBy(steps)(initial))
 }
-case object VerticalMovement extends Movement {
-  val towards = (steps: Int) => List(North.towardsBy(steps), South.towardsBy(steps))
+case object VerticalMove extends Move {
+  def shift(steps: Int, initial: Cell) = List(North.towardsBy(steps)(initial), South.towardsBy(steps)(initial))
 }
-case object DiagonalMovement extends Movement {
-  val towards = (steps: Int) => List(NorthEast.towardsBy(steps), NorthWest.towardsBy(steps),
-                                  SouthEast.towardsBy(steps), SouthWest.towardsBy(steps))
+case object DiagonalMove extends Move {
+  def shift(steps: Int, initial: Cell) = List(NorthEast.towardsBy(steps)(initial),
+                              NorthWest.towardsBy(steps)(initial),
+                              SouthEast.towardsBy(steps)(initial),
+                              SouthWest.towardsBy(steps)(initial))
 }
-object Movement {
+object Move {
   def buildComplexMove(directions: List[(Direction, Int)]) = {
     val cellsAfterApplicationOfSteps = directions.map(directionAndStep => {
       val (direction, step) = directionAndStep
