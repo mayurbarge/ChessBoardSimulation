@@ -10,9 +10,5 @@ trait Piece { self =>
     self.allowedMoves.flatMap(movement => movement.shift(steps, currentPosition).filter(filterCondition(_)))
   }
 
-  def possibleMovesAtPosition(steps: Int, currentPosition: Cell) = {
-    self.allowedMoves.flatMap(movement => movement.shift(steps, currentPosition))
-  }
-
   def allPossibleMoves(currentPosition: Cell): List[Cell]
 }
