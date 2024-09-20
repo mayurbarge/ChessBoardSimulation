@@ -14,7 +14,10 @@ trait Piece { self =>
     self.allowedMoves.flatMap(movement => movement.shift(steps, currentPosition))
   }
   def allSingleStepPossibleMoves(currentPosition: Cell): List[Cell] = {
-    possibleMovesAtPositionWithFilter(1, currentPosition, cellToCheck => ValidatedCell(cellToCheck).isValid &&  currentPosition != cellToCheck)
+    def filterCondition(cellToCheck: Cell) =
+      ValidatedCell(cellToCheck).isValid && currentPosition != cellToCheck
+
+    possibleMovesAtPositionWithFilter(1, currentPosition, filterCondition)
   }
   def allPossibleMoves(currentPosition: Cell): List[Cell]
 }
