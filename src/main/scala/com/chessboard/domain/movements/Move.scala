@@ -1,8 +1,7 @@
 package com.chessboard.domain.movements
 
 import com.chessboard.domain._
-import com.chessboard.domain.movements.HorizontalMove.findNextPositions
-import com.chessboard.domain.movements.VerticalMove.findNextPositions
+import com.chessboard.domain.movements.HorizontalMove.{directionsAllowedForMove, findNextPositions}
 sealed trait Move {
   def shift(nthStep: Int, initial: Cell): List[Cell]
   def applyMoves(nthStep: Int, moves: List[(Direction, Int)]): List[Cell => Cell] = {
@@ -24,24 +23,24 @@ sealed trait Move {
     nextPositionsList.map(nextCellOf => nextCellOf(initial))
   }
 }
-case object HorizontalMove extends Move {
+
+trait MoveWithRegularDirections extends Move {
+  val directionsAllowedForMove: List[Direction]
+
   def shift(nthStep: Int, initial: Cell) = {
-    val nextPositionsList = super.applyMoves(MoveDirections.horizontal.map((_, nthStep)))
+    val nextPositionsList = applyMoves(directionsAllowedForMove.map((_, nthStep)))
     findNextPositions(initial, nextPositionsList)
   }
 }
-case object VerticalMove extends Move {
-  def shift(nthStep: Int, initial: Cell) = {
-    val nextPositionsList = super.applyMoves(MoveDirections.vertical.map((_, nthStep)))
-    findNextPositions(initial, nextPositionsList)
-  }
+case object HorizontalMove extends Move with MoveWithRegularDirections {
+  val directionsAllowedForMove = MoveDirections.horizontal
+}
+case object VerticalMove extends Move with MoveWithRegularDirections {
+  val directionsAllowedForMove = MoveDirections.vertical
 }
 
-case object DiagonalMove extends Move {
-  def shift(nthStep: Int, initial: Cell) = {
-    val nextPositionsList = super.applyMoves(MoveDirections.diagonal.map((_, nthStep)))
-    findNextPositions(initial, nextPositionsList)
-  }
+case object DiagonalMove extends Move with MoveWithRegularDirections {
+  val directionsAllowedForMove = MoveDirections.diagonal
 }
 case class ComplexMove(complexMoves: List[List[(Direction, Int)]]) extends Move {
   override def shift(nthStep: Int, initial: Cell): List[Cell] = {
