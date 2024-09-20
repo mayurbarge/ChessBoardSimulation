@@ -1,4 +1,4 @@
-package com.chessboard.domain.movements
+package com.chessboard.domain.pieces
 
 sealed trait StepType
 case object SingleStep extends StepType

@@ -1,4 +1,4 @@
-package com.chessboard.domain.movements
+package com.chessboard.domain.moves
 
 import com.chessboard.domain.{Direction, East, North, NorthEast, NorthWest, South, SouthEast, SouthWest, West}
 

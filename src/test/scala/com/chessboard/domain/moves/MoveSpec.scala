@@ -1,10 +1,11 @@
-package com.chessboard.domain.movements
+package com.chessboard.domain.moves
 
-import com.chessboard.domain.{Cell, Direction, East, North, South, ValidatedCell, West}
+import com.chessboard.domain.Cell
+import com.chessboard.domain.moves.{DiagonalMove, HorizontalMove, VerticalMove}
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 
-class MovementSpec extends AnyFunSpec with Matchers {
+class MoveWithRegularDirectionsSpec extends AnyFunSpec with Matchers {
   describe("A SingleStep Movement") {
     it("in horizontal direction should return A2, C2 when applied for a single step at position B2") {
       HorizontalMove.shift(1, Cell('B', 2)) should contain theSameElementsAs Seq(Cell('A', 2), Cell('C', 2))
@@ -16,18 +17,6 @@ class MovementSpec extends AnyFunSpec with Matchers {
 
     it("in diagonal direction should return B3, B7, F3 and D7 when applied for a 2 steps at position D5") {
       DiagonalMove.shift(2, Cell('D', 5)) should contain theSameElementsAs List(Cell('B', 3), Cell('B', 7), Cell('F', 3), Cell('F', 7))
-    }
-
-    describe("A Complex Movement") {
-      it("should calculate a move at E5 from combination of 2 East and 3 South steps in succession to reach at G2") {
-        val complexMovement = ComplexMove(List(List((East, 2), (South, 3))))
-        complexMovement.shift(1, Cell('E', 5)) shouldBe List(Cell('G', 2))
-      }
-
-      it("should return the same position for a circular path") {
-        val complexMovement = ComplexMove(List(List((North, 2), (East, 2), (South, 2), (West, 2))))
-        complexMovement.shift(1, Cell('E', 5)) shouldBe List(Cell('E', 5))
-      }
     }
   }
 
@@ -44,13 +33,6 @@ class MovementSpec extends AnyFunSpec with Matchers {
       DiagonalMove.shift(3, Cell('D', 4)) should contain theSameElementsAs List(
         Cell('A', 1), Cell('G', 1),
         Cell('A', 7), Cell('G', 7))
-    }
-
-    describe("A Complex Movement") {
-      it("should calculate a move at A7 from combination of 1 East and 2 South in 2 steps to reach at G2") {
-        val complexMovement = ComplexMove(List(List((East, 1), (South, 2))))
-        complexMovement.shift(2, Cell('A', 7)) shouldBe List(Cell('C', 3))
-      }
     }
   }
 }

@@ -1,7 +1,7 @@
 package com.chessboard.domain.pieces
 
-import com.chessboard.domain.movements.{Move, SingleStep, StepType}
-import com.chessboard.domain.{Cell, ValidatedCell}
+import com.chessboard.domain.Cell
+import com.chessboard.domain.moves.Move
 
 trait Piece { self =>
   val stepType: StepType
@@ -15,18 +15,4 @@ trait Piece { self =>
   }
 
   def allPossibleMoves(currentPosition: Cell): List[Cell]
-}
-trait SingleStepPiece extends Piece {
-  override def allPossibleMoves(currentPosition: Cell): List[Cell] = {
-    allSingleStepPossibleMoves(currentPosition)
-  }
-  def allSingleStepPossibleMoves(currentPosition: Cell): List[Cell] = {
-    def filterCondition(cellToCheck: Cell) =
-      ValidatedCell(cellToCheck).isValid && currentPosition != cellToCheck
-
-    possibleMovesAtPositionWithFilter(1, currentPosition, filterCondition)
-  }
-}
-case class King(allowedMoves: List[Move]) extends Piece with SingleStepPiece {
-  override val stepType: StepType = SingleStep
 }
