@@ -1,32 +1,41 @@
 package com.chessboard.domain.movements
 
 import com.chessboard.domain._
-
-
 sealed trait Move {
   def shift(steps: Int, initial: Cell): List[Cell]
-}
-case object HorizontalMove extends Move {
-  def shift(steps: Int, initial: Cell) = List(East.towardsBy(steps)(initial), West.towardsBy(steps)(initial))
-}
-case object VerticalMove extends Move {
-  def shift(steps: Int, initial: Cell) = List(North.towardsBy(steps)(initial), South.towardsBy(steps)(initial))
-}
-case object DiagonalMove extends Move {
-  def shift(steps: Int, initial: Cell) = List(NorthEast.towardsBy(steps)(initial),
-                              NorthWest.towardsBy(steps)(initial),
-                              SouthEast.towardsBy(steps)(initial),
-                              SouthWest.towardsBy(steps)(initial))
-}
-object Move {
-  def buildComplexMove(directions: List[(Direction, Int)]) = {
-    val cellsAfterApplicationOfSteps = directions.map(directionAndStep => {
+  def applyMoves(moves: List[(Direction, Int)]) = {
+    moves.map(directionAndStep => {
       val (direction, step) = directionAndStep
       direction.towardsBy(step)
     })
-
-    val combinedResult: Cell => Cell = cellsAfterApplicationOfSteps.reduce(_ andThen _)
-    combinedResult
   }
+}
+case object HorizontalMove extends Move {
+  def shift(steps: Int, initial: Cell) = {
+    super.applyMoves(List((East, steps), (West, steps))).map(f => f(initial))
+  }
+}
+case object VerticalMove extends Move {
+  def shift(steps: Int, initial: Cell) = {
+    super.applyMoves(List((North, steps), (South, steps))).map(f => f(initial))
+  }
+}
 
+case object DiagonalMove extends Move {
+  def shift(steps: Int, initial: Cell) = {
+    super.applyMoves(List((
+      NorthEast, steps),
+      (NorthWest, steps),
+      (SouthEast, steps),
+      (SouthWest, steps))).map(f => f(initial))
+  }
+}
+case class ComplexMove(complexMoves: List[List[(Direction, Int)]]) extends Move {
+  def sequenceMovesInLine(moves: List[Cell => Cell]): Cell => Cell = moves.reduce(_ andThen _)
+  override def shift(steps: Int, initial: Cell): List[Cell] = {
+    complexMoves.map(moves =>
+      sequenceMovesInLine(super.applyMoves(moves.map(
+        directionAndStep => (directionAndStep._1, directionAndStep._2 * steps))))
+    ).map(f => f(initial))
+  }
 }

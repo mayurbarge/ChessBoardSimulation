@@ -1,15 +1,18 @@
 package com.chessboard.domain.pieces
 
-import com.chessboard.domain.{Cell, East, ValidatedCell, West}
-import com.chessboard.domain.movements.{DiagonalMove, HorizontalMove, Move, SingleStep, VerticalMove}
+import com.chessboard.domain.movements.{DiagonalMove, HorizontalMove, Move, SingleStep, Step, VerticalMove}
+import com.chessboard.domain.{Cell, ValidatedCell}
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 
 class PieceSpec extends AnyFunSpec with Matchers {
   describe("A Custom Piece") {
     it("at current position E2 and allowed move in East by 1 place should return possible moves D2 and F2") {
-      val king = King(SingleStep, List(HorizontalMove))
-      king.possibleMovesAtPosition(1, Cell('E', 2)) should contain theSameElementsAs List(Cell('D', 2), Cell('F', 2))
+      val customPiece = new Piece {
+        override val stepType: Step = SingleStep
+        override val allowedMoves: List[Move] = List(HorizontalMove)
+      }
+      customPiece.possibleMovesAtPosition(1, Cell('E', 2)) should contain theSameElementsAs List(Cell('D', 2), Cell('F', 2))
     }
   }
 
@@ -18,14 +21,6 @@ class PieceSpec extends AnyFunSpec with Matchers {
       val king = King(SingleStep, List(HorizontalMove, VerticalMove, DiagonalMove))
       king.possibleMovesAtPositionWithFilter(1, Cell('A', 1), ValidatedCell(_).isValid) should contain theSameElementsAs
         List(Cell('A', 2), Cell('B', 2), Cell('B', 1))
-    }
-  }
-
-  describe("A Custom Piece with complex moves") {
-    it("d") {
-      val complexMove = Move.buildComplexMove(List((East, 3), (West, 3)))
-      val king = King(SingleStep, List(complexMove()))
-
     }
   }
 

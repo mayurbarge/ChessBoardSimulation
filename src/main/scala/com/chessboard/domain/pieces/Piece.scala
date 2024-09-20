@@ -6,7 +6,8 @@ import com.chessboard.domain.movements.{Move, Step}
 trait Piece { self =>
   val stepType: Step
   val allowedMoves: List[Move]
-  def possibleMovesAtPosition(steps: Int, currentPosition: Cell) = self.allowedMoves.flatMap(movement => movement.shift(steps, currentPosition))
+  def possibleMovesAtPosition(steps: Int, currentPosition: Cell) =
+    self.allowedMoves.flatMap(movement => movement.shift(steps, currentPosition))
   def possibleMovesAtPositionWithFilter(steps: Int, currentPosition: Cell, filter: Cell => Boolean) = {
     self.allowedMoves.flatMap(movement => movement.shift(steps, currentPosition).takeWhile(filter(_)))
   }
