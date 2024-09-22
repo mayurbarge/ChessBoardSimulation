@@ -8,12 +8,13 @@ trait Move {
     val nthStepTowardsDirection = increaseStepCount(_, nthStep)
     applyMoves(moves.map(nthStepTowardsDirection))
   }
+  protected def applyMoves(moves: List[(Direction, Int)]) = {
+    moves.map(findNthCellTowardsDirection)
+  }
+
   private def increaseStepCount(directionAndStep: (Direction, Int), nthStep: Int) = {
     val (direction, step) = directionAndStep
     (direction, step * nthStep)
-  }
-  protected def applyMoves(moves: List[(Direction, Int)]) = {
-    moves.map(findNthCellTowardsDirection)
   }
   private def findNthCellTowardsDirection(directionAndStep: (Direction, Int)) = {
     val (direction, step) = directionAndStep

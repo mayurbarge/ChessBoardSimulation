@@ -1,7 +1,8 @@
 package com.chessboard.domain.pieces
 
 import com.chessboard.domain.moves._
-import com.chessboard.domain.{Cell, ValidatedCell}
+import com.chessboard.domain.validations.MoveRestriction
+import com.chessboard.domain.{Board, BoardSize, Cell, ValidatedCell}
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 
