@@ -5,6 +5,6 @@ trait MoveWithRegularDirections extends Move {
   val directionsAllowedForMove: List[Direction]
   def shift(nthStep: Int, initial: Cell) = {
     val nextPositionsList = applyMoves(directionsAllowedForMove.map((_, nthStep)))
-    findNextPositions(initial, nextPositionsList)
+    nextPositionsList.map(_(initial))
   }
 }

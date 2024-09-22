@@ -9,5 +9,14 @@ case class ComplexMove(complexMoves: List[List[(Direction, Int)]]) extends Move 
     )
     nextPositionsList.map(_(initial))
   }
+  protected def applyMoves(nthStep: Int, moves: List[(Direction, Int)]): List[Cell => Cell] = {
+    val nthStepTowardsDirection = increaseStepCount(_, nthStep)
+    applyMoves(moves.map(nthStepTowardsDirection))
+  }
+
+  private def increaseStepCount(directionAndStep: (Direction, Int), nthStep: Int) = {
+    val (direction, step) = directionAndStep
+    (direction, step * nthStep)
+  }
   def sequenceMultipleMovesIntoOne(moves: List[Cell => Cell]): Cell => Cell = moves.reduce(_ andThen _)
 }

@@ -12,7 +12,6 @@ trait Piece { self =>
 
   protected def allMovesOnBoardWithRestrictions(steps: Int, currentPosition: Cell, moveRestriction: RestrictedMovesFilter): List[Cell] = {
     self.allowedMoves.flatMap(movement => movement.shiftConditional(steps, currentPosition, moveRestriction.run(currentPosition)))
-
   }
   def allMovesOnBoard(currentPosition: Cell, board: Board, moveRestriction: RestrictedMovesFilter): List[Cell] = {
     stepType  match {
@@ -20,7 +19,6 @@ trait Piece { self =>
       case MultiStep => (1 to board.size.maxLength)
         .flatMap(allMovesOnBoardWithRestrictions(_, currentPosition, moveRestriction)).toList
     }
-
   }
 }
 object Piece {
