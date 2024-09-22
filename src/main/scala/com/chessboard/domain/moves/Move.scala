@@ -1,9 +1,15 @@
 package com.chessboard.domain.moves
 
+import com.chessboard.domain.validations.RestrictedMovesFilter
 import com.chessboard.domain.{Cell, Direction}
 
 trait Move {
   def shift(nthStep: Int, initial: Cell): List[Cell]
+
+  def shiftConditional(nthStep: Int, initial: Cell, condition: Cell => Boolean): List[Cell] = {
+    val nextPositions = shift(nthStep, initial)
+    nextPositions.filter(condition(_))
+  }
   protected def applyMoves(nthStep: Int, moves: List[(Direction, Int)]): List[Cell => Cell] = {
     val nthStepTowardsDirection = increaseStepCount(_, nthStep)
     applyMoves(moves.map(nthStepTowardsDirection))

@@ -1,19 +1,11 @@
 package com.chessboard.domain.validations
 
-import cats.data.Validated
-import com.chessboard.domain.Cell
-import com.chessboard.errors.InvalidCellException
+import com.chessboard.domain.{BoardSize, Cell}
 
-sealed trait CellValidations {
-  def validateCell(cell: Cell) = {
-    if (isCellWithinColumnRange(cell.column) && isCellWithinRowRange(cell.row)) {
-      Validated.Valid(cell)
-    } else Validated.Invalid(InvalidCellException())
+trait CellValidations {
+  def validateCell(current: Cell, boardSize: BoardSize): Boolean = {
+      (current.row >= 1 && current.row <= boardSize.maxLength) &&
+        (current.columnValue >= 1 && current.columnValue <= boardSize.maxLength)
   }
-  private def isCellWithinColumnRange(cellColumn: Char) = ('A' to 'H').contains(cellColumn)
-
-  private def isCellWithinRowRange(cellRow: Int) = (1 to 8).contains(cellRow)
 }
-
 object CellValidations extends CellValidations
-

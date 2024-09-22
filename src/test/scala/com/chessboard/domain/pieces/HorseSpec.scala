@@ -2,7 +2,7 @@ package com.chessboard.domain.pieces
 
 import com.chessboard.domain.{Board, BoardSize, Cell, East, North, South, West}
 import com.chessboard.domain.moves.ComplexMove
-import com.chessboard.domain.validations.MoveRestriction
+import com.chessboard.domain.validations.{BoundaryCheckAndSameCellCheckFilter, RestrictedMovesFilter}
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.funsuite.AnyFunSuiteLike
 import org.scalatest.matchers.should.Matchers
@@ -26,7 +26,7 @@ class HorseSpec extends AnyFunSpec with Matchers {
 
   val horse = Horse(horseMoves)
   val board = Board(BoardSize(8,8))
-  val moveRestrictions = new MoveRestriction {}
+  val moveRestrictions = BoundaryCheckAndSameCellCheckFilter(board)
 
   describe("A Horse") {
     it("should calculate horse moves from E4 to reach F6, D6, F2, D2, G5, G3, C5, C3") {

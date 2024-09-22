@@ -2,7 +2,7 @@ package com.chessboard.domain.pieces
 
 import com.chessboard.domain.{Board, BoardSize, Cell}
 import com.chessboard.domain.moves.{DiagonalMove, HorizontalMove, MoveDirections, VerticalMove}
-import com.chessboard.domain.validations.MoveRestriction
+import com.chessboard.domain.validations.{BoundaryCheckAndSameCellCheckFilter, RestrictedMovesFilter}
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -10,7 +10,7 @@ class QueenSpec extends AnyFunSpec with Matchers {
   val queenMoves = List(HorizontalMove, VerticalMove, DiagonalMove)
   val queen = Queen(queenMoves)
   val board = Board(BoardSize(8,8))
-  val moveRestrictions = new MoveRestriction {}
+  val moveRestrictions = BoundaryCheckAndSameCellCheckFilter(board)
 
   describe("A Queen") {
     it("should move in all directions by in multiple steps to cover valid 27 cells") {

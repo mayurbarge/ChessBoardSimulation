@@ -55,9 +55,10 @@ class DirectionSpec extends AnyFunSpec with Matchers {
     }
 
     describe("West") {
+      val boardSize = BoardSize(8,8)
       it("should return invalid cell at A1 when transformed by 2 places") {
         val cell: Cell = SouthWest.shiftTowardsBy(2)(Cell('A', 1))
-        ValidatedCell(cell).leftMap(_.getMessage) shouldBe Validated.Invalid("Cell is invalid.")
+        ValidatedCell(cell, boardSize).leftMap(_.getMessage) shouldBe Validated.Invalid("Cell is invalid.")
       }
     }
   }

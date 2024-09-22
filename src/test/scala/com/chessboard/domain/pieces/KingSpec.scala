@@ -2,7 +2,7 @@ package com.chessboard.domain.pieces
 
 import com.chessboard.domain.{Board, BoardSize, Cell}
 import com.chessboard.domain.moves.{DiagonalMove, HorizontalMove, VerticalMove}
-import com.chessboard.domain.validations.MoveRestriction
+import com.chessboard.domain.validations.{BoundaryCheckAndSameCellCheckFilter, RestrictedMovesFilter}
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 
@@ -10,7 +10,7 @@ class KingSpec extends AnyFunSpec with Matchers {
   val king = King(List(HorizontalMove, VerticalMove, DiagonalMove))
 
   val board = Board(BoardSize(8,8))
-  val moveRestrictions = new MoveRestriction {}
+  val moveRestrictions = BoundaryCheckAndSameCellCheckFilter(board)
 
   describe("A King") {
     it("should move by one position at A1 to reach A2, B1, B2") {

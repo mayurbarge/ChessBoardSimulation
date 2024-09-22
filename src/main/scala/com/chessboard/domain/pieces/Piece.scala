@@ -3,20 +3,22 @@ package com.chessboard.domain.pieces
 import cats.data.Validated
 import com.chessboard.domain.{Board, Cell}
 import com.chessboard.domain.moves.{AllMoves, Move}
-import com.chessboard.domain.validations.MoveRestriction
+import com.chessboard.domain.validations.RestrictedMovesFilter
 import com.chessboard.errors.InvalidPieceNameException
 
 trait Piece { self =>
   val stepType: StepType
   def allowedMoves: List[Move]
-  protected def allMovesOnBoardWithRestrictions(steps: Int, currentPosition: Cell, isMoveAllowed: Cell => Boolean): List[Cell] = {
-    self.allowedMoves.flatMap(movement => movement.shift(steps, currentPosition).filter(isMoveAllowed(_)))
+
+  protected def allMovesOnBoardWithRestrictions(steps: Int, currentPosition: Cell, moveRestriction: RestrictedMovesFilter): List[Cell] = {
+    self.allowedMoves.flatMap(movement => movement.shiftConditional(steps, currentPosition, moveRestriction.run(currentPosition)))
+
   }
-  def allMovesOnBoard(currentPosition: Cell, board: Board, moveRestriction: MoveRestriction): List[Cell] = {
+  def allMovesOnBoard(currentPosition: Cell, board: Board, moveRestriction: RestrictedMovesFilter): List[Cell] = {
     stepType  match {
-      case SingleStep => allMovesOnBoardWithRestrictions(1, currentPosition, moveRestriction.isMoveAllowed(_, currentPosition))
+      case SingleStep => allMovesOnBoardWithRestrictions(1, currentPosition, moveRestriction)
       case MultiStep => (1 to board.size.maxLength)
-        .flatMap(allMovesOnBoardWithRestrictions(_, currentPosition, moveRestriction.isMoveAllowed(_, currentPosition))).toList
+        .flatMap(allMovesOnBoardWithRestrictions(_, currentPosition, moveRestriction)).toList
     }
 
   }
