@@ -30,17 +30,17 @@ class HorseSpec extends AnyFunSpec with Matchers {
 
   describe("A Horse") {
     it("should calculate horse moves from E4 to reach F6, D6, F2, D2, G5, G3, C5, C3") {
-      horse.allPossibleMoves(Cell('E', 4), board, moveRestrictions) should contain theSameElementsAs
+      horse.allMovesOnBoard(Cell('E', 4), board, moveRestrictions) should contain theSameElementsAs
         List(Cell('F',6), Cell('D',6), Cell('F',2), Cell('D',2), Cell('G',5), Cell('G',3), Cell('C',5), Cell('C',3))
     }
 
     it("should calculate horse moves from H1 to reach G3, F2") {
-      horse.allPossibleMoves(Cell('H', 1), board, moveRestrictions) should contain theSameElementsAs
+      horse.allMovesOnBoard(Cell('H', 1), board, moveRestrictions) should contain theSameElementsAs
         List(Cell('F',2), Cell('G', 3))
     }
 
     it("should calculate horse moves from H8 to reach F7, G6") {
-      horse.allPossibleMoves(Cell('H', 8), board, moveRestrictions) should contain theSameElementsAs
+      horse.allMovesOnBoard(Cell('H', 8), board, moveRestrictions) should contain theSameElementsAs
         List(Cell('F',7), Cell('G', 6))
     }
   }
