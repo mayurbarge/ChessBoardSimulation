@@ -2,7 +2,6 @@ package com.chessboard.domain.moves
 
 import com.chessboard.domain.Cell
 import org.scalatest.funspec.AnyFunSpec
-import org.scalatest.funsuite.AnyFunSuiteLike
 import org.scalatest.matchers.should.Matchers
 
 class AllMovesSpec extends AnyFunSpec with Matchers {

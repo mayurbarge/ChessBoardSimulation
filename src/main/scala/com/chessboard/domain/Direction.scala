@@ -1,5 +1,4 @@
 package com.chessboard.domain
-
 trait Direction {
   def shiftTowardsBy(steps: Int): Cell => Cell
 }

@@ -9,6 +9,7 @@ lazy val root = (project in file("."))
       "org.scalactic" %% "scalactic" % "3.2.19",
       "org.scalatest" %% "scalatest" % "3.2.19" % "test",
       "org.typelevel" %% "cats-core" % "2.7.0",
-      "org.typelevel" %% "cats-effect" % "3.3.5"),
+      "org.typelevel" %% "cats-effect" % "3.3.5",
+      "org.typelevel" %% "cats-effect-testing-specs2" % "1.5.0" % Test),
       resolvers += "Artima Maven Repository" at "https://repo.artima.com/releases"
   )

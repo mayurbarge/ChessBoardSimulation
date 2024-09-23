@@ -44,7 +44,7 @@ class BoardSpec extends AnyFunSpec with Matchers with WithTestData {
   }
 
   describe("with size 0") {
-    it("should contain A1 cell") {
+    it("should not contain A1 cell") {
       Board(zero).containsCell(Cell('A', 1)) shouldBe false
     }
   }

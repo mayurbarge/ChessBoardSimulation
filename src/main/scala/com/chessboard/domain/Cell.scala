@@ -2,7 +2,6 @@ package com.chessboard.domain
 
 import cats.data.Validated
 import com.chessboard.domain.validations.CellValidations
-import com.chessboard.domain.validations.CellValidations.validateCell
 import com.chessboard.errors.InvalidCellException
 
 sealed case class Cell(column: Char, row: Int) {
@@ -10,6 +9,7 @@ sealed case class Cell(column: Char, row: Int) {
 
   val columnValue = column - 64
 
+  override def toString: String = column.toString + row.toString
 }
 object Cell {
   def apply(column: Int, row: Int): Cell = Cell((column+64).toChar, row)

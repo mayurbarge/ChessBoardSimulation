@@ -1,7 +1,6 @@
 package com.chessboard.domain.moves
 
-import com.chessboard.domain.moves.ComplexMove
-import com.chessboard.domain.{Cell, East, North, South, West}
+import com.chessboard.domain._
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 

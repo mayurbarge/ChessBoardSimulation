@@ -22,7 +22,7 @@ trait Piece { self =>
   }
 }
 object Piece {
-  def apply(pieceName: String): Validated[Exception, Piece] = {
+  def apply(pieceName: String): Validated[InvalidPieceNameException, Piece] = {
     pieceName match {
       case PieceNames.KING => Validated.valid(King(List(AllMoves)))
       case PieceNames.QUEEN => Validated.valid(Queen(List(AllMoves)))

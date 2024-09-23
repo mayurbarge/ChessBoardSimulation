@@ -1,6 +1,5 @@
 package com.chessboard.domain.validations
 
-import cats.data.Validated
 import com.chessboard.domain.{BoardSize, Cell}
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
@@ -10,6 +9,11 @@ class CellValidationsTest extends AnyFunSpec with Matchers {
   describe("A cell validator") {
     it("should return validation success for A1 cell") {
       val cell = Cell('A', 1)
+      CellValidations.validateCell(cell, boardSize) shouldBe true
+    }
+
+    it("should return validation success for A8 cell") {
+      val cell = Cell('A', 8)
       CellValidations.validateCell(cell, boardSize) shouldBe true
     }
 
