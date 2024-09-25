@@ -1,4 +1,4 @@
-package com.chessboard.domain
+package com.chessboard.domain.board
 
 case class Board(size: BoardSize) {
   def containsCell(cell: Cell) = {

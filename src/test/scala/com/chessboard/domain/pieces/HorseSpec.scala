@@ -1,6 +1,7 @@
 package com.chessboard.domain.pieces
 
-import com.chessboard.domain.{Board, BoardSize, Cell, East, North, South, West}
+import com.chessboard.domain.board.{Board, BoardSize, Cell}
+import com.chessboard.domain.{East, North, South, West}
 import com.chessboard.domain.moves.ComplexMove
 import com.chessboard.domain.validations.{BoundaryCheckAndSameCellCheckFilter, RestrictedMovesFilter}
 import org.scalatest.funspec.AnyFunSpec

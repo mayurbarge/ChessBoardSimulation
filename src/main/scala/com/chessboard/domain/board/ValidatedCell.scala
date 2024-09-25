@@ -1,24 +1,14 @@
-package com.chessboard.domain
+package com.chessboard.domain.board
 
 import cats.data.Validated
+import com.chessboard.domain.errors.InvalidCellException
 import com.chessboard.domain.validations.CellValidations
-import com.chessboard.errors.InvalidCellException
 
-sealed case class Cell(column: Char, row: Int) {
-  def cellNumber = (columnValue, row)
-
-  val columnValue = column - 64
-
-  override def toString: String = column.toString + row.toString
-}
-object Cell {
-  def apply(column: Int, row: Int): Cell = Cell((column+64).toChar, row)
-}
 class ValidatedCell[E, T] private(override val column: Char, override val row: Int) extends Cell(column, row)
 object ValidatedCell {
   def apply(column: Char, row: Int, boardSize: BoardSize) = {
-      val cell = Cell(column, row)
-      validateCell(cell, boardSize)
+    val cell = Cell(column, row)
+    validateCell(cell, boardSize)
   }
   def apply(cell:Cell, boardSize: BoardSize) = {
     validateCell(cell, boardSize)

@@ -1,4 +1,4 @@
-package com.chessboard.domain
+package com.chessboard.domain.board
 
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers

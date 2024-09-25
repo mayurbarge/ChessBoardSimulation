@@ -1,6 +1,6 @@
 package com.chessboard.domain.validations
 
-import com.chessboard.domain.{BoardSize, Cell}
+import com.chessboard.domain.board.{BoardSize, Cell}
 
 trait CellValidations {
   def validateCell(current: Cell, boardSize: BoardSize): Boolean = {

@@ -4,8 +4,8 @@ import cats.effect.unsafe.implicits.global
 import cats.effect.{IO, IOApp}
 import com.chessboard.domain.pieces.Piece
 import com.chessboard.domain.validations.BoundaryCheckAndSameCellCheckFilter
-import com.chessboard.domain.{Board, BoardSize, Cell, ValidatedCell}
 import cats.effect.std.Console
+import com.chessboard.domain.board.{Board, BoardSize, Cell, ValidatedCell}
 
 object GameRun {
   def splitTokens(boardSize: BoardSize, input: String) = {

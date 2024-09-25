@@ -1,6 +1,6 @@
 package com.chessboard.domain.validations
 
-import com.chessboard.domain.{Board, Cell}
+import com.chessboard.domain.board.{Board, Cell}
 
 abstract class RestrictedMovesFilter {
   def run(currentPosition: Cell)(nextPosition: Cell): Boolean

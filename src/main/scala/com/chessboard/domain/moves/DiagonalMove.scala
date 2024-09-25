@@ -1,5 +1,7 @@
 package com.chessboard.domain.moves
 
+import com.chessboard.domain.Direction
+
 case object DiagonalMove extends Move with MoveWithRegularDirections {
-  val directionsAllowedForMove = MoveDirections.diagonal
+  val directionsAllowedForMove: List[Direction] = MoveDirections.diagonal
 }

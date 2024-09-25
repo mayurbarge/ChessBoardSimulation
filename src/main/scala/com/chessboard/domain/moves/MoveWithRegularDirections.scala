@@ -1,6 +1,7 @@
 package com.chessboard.domain.moves
 
 import com.chessboard.domain._
+import com.chessboard.domain.board.Cell
 trait MoveWithRegularDirections extends Move {
   val directionsAllowedForMove: List[Direction]
   def shift(nthStep: Int, initial: Cell) = {

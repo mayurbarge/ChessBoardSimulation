@@ -1,7 +1,7 @@
 package com.chessboard.domain.moves
 
-import com.chessboard.domain.validations.RestrictedMovesFilter
-import com.chessboard.domain.{Cell, Direction}
+import com.chessboard.domain.Direction
+import com.chessboard.domain.board.Cell
 
 trait Move {
   def shift(nthStep: Int, initial: Cell): List[Cell]

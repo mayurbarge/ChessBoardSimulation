@@ -1,6 +1,7 @@
 package com.chessboard.domain.moves
 
-import com.chessboard.domain.{Cell, Direction}
+import com.chessboard.domain.Direction
+import com.chessboard.domain.board.Cell
 
 case class ComplexMove(complexMoves: List[List[(Direction, Int)]]) extends Move {
   override def shift(nthStep: Int, initial: Cell): List[Cell] = {

@@ -2,10 +2,10 @@ package com.chessboard.app
 
 import cats.effect.IO
 import cats.effect.testing.scalatest.AsyncIOSpec
+import com.chessboard.domain.board.{BoardSize, Cell}
+import com.chessboard.domain.errors.{InvalidCellException, InvalidPieceNameException}
 import com.chessboard.domain.moves.AllMoves
 import com.chessboard.domain.pieces.{King, Piece}
-import com.chessboard.domain.{BoardSize, Cell}
-import com.chessboard.errors.{InvalidCellException, InvalidPieceNameException}
 import org.scalatest.freespec.AsyncFreeSpec
 import org.scalatest.matchers.should.Matchers
 class GameRunSpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {

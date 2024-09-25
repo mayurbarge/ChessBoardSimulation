@@ -1,6 +1,6 @@
 package com.chessboard.domain.pieces
 
-import com.chessboard.domain.{Board, BoardSize, Cell}
+import com.chessboard.domain.board.{Board, BoardSize, Cell}
 import com.chessboard.domain.moves.{DiagonalMove, HorizontalMove, VerticalMove}
 import com.chessboard.domain.validations.{BoundaryCheckAndSameCellCheckFilter, RestrictedMovesFilter}
 import org.scalatest.funspec.AnyFunSpec

@@ -1,6 +1,7 @@
 package com.chessboard.domain.moves
 
 import com.chessboard.domain._
+import com.chessboard.domain.board.Cell
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 

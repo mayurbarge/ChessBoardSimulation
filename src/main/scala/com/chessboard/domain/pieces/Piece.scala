@@ -1,10 +1,10 @@
 package com.chessboard.domain.pieces
 
 import cats.data.Validated
-import com.chessboard.domain.{Board, Cell}
+import com.chessboard.domain.board.{Board, Cell}
+import com.chessboard.domain.errors.InvalidPieceNameException
 import com.chessboard.domain.moves.{AllMoves, Move}
 import com.chessboard.domain.validations.RestrictedMovesFilter
-import com.chessboard.errors.InvalidPieceNameException
 
 trait Piece { self =>
   val stepType: StepType

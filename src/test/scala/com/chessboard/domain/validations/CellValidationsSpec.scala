@@ -1,6 +1,6 @@
 package com.chessboard.domain.validations
 
-import com.chessboard.domain.{BoardSize, Cell}
+import com.chessboard.domain.board.{BoardSize, Cell}
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 class CellValidationsTest extends AnyFunSpec with Matchers {

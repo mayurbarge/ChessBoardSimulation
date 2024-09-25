@@ -1,6 +1,7 @@
 package com.chessboard.domain
 
 import cats.data.Validated
+import com.chessboard.domain.board.{BoardSize, Cell, ValidatedCell}
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 

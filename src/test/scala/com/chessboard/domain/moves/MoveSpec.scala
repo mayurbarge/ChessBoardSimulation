@@ -1,6 +1,6 @@
 package com.chessboard.domain.moves
 
-import com.chessboard.domain.Cell
+import com.chessboard.domain.board.Cell
 import com.chessboard.domain.moves.{DiagonalMove, HorizontalMove, VerticalMove}
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
