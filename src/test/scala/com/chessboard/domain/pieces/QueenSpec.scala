@@ -1,14 +1,14 @@
 package com.chessboard.domain.pieces
 
 import com.chessboard.domain.board.{Board, BoardSize, Cell}
-import com.chessboard.domain.moves.{DiagonalMove, HorizontalMove, MoveDirections, VerticalMove}
-import com.chessboard.domain.validations.{BoundaryCheckAndSameCellCheckFilter, RestrictedMovesFilter}
+import com.chessboard.domain.validations.BoundaryCheckAndSameCellCheckFilter
+import com.chessboard.domain.walks.{DiagonalWalk, HorizontalWalk, VerticalWalk}
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 
 class QueenSpec extends AnyFunSpec with Matchers {
-  val queenMoves = List(HorizontalMove, VerticalMove, DiagonalMove)
-  val queen = Queen(queenMoves)
+  val queenWalks = List(HorizontalWalk, VerticalWalk, DiagonalWalk)
+  val queen = Queen(queenWalks)
   val board = Board(BoardSize(8,8))
   val moveRestrictions = BoundaryCheckAndSameCellCheckFilter(board)
 

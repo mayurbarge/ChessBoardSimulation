@@ -3,29 +3,30 @@ package com.chessboard.domain.pieces
 import cats.data.Validated
 import com.chessboard.domain.board.{Board, Cell}
 import com.chessboard.domain.errors.InvalidPieceNameException
-import com.chessboard.domain.moves.{AllMoves, Move}
 import com.chessboard.domain.validations.RestrictedMovesFilter
+import com.chessboard.domain.walks.{AllWalks, Walk}
 
 trait Piece { self =>
   val stepType: StepType
-  def allowedMoves: List[Move]
+  def allowedWalks: List[Walk]
 
-  protected def allMovesOnBoardWithRestrictions(steps: Int, currentPosition: Cell, moveRestriction: RestrictedMovesFilter): List[Cell] = {
-    self.allowedMoves.flatMap(movement => movement.shiftConditional(steps, currentPosition, moveRestriction.run(currentPosition)))
+  protected def getAllMovesByRestrictedMovesFilter(steps: Int, currentPosition: Cell, moveRestriction: RestrictedMovesFilter): List[Cell] = {
+    self.allowedWalks.flatMap(movement =>
+      movement.startWalkAndCheckRestrictedMoves(steps, currentPosition, moveRestriction.run(currentPosition)))
   }
   def allMovesOnBoard(currentPosition: Cell, board: Board, moveRestriction: RestrictedMovesFilter): List[Cell] = {
     stepType  match {
-      case SingleStep => allMovesOnBoardWithRestrictions(1, currentPosition, moveRestriction)
+      case SingleStep => getAllMovesByRestrictedMovesFilter(1, currentPosition, moveRestriction)
       case MultiStep => (1 to board.size.maxLength)
-        .flatMap(allMovesOnBoardWithRestrictions(_, currentPosition, moveRestriction)).toList
+        .flatMap(getAllMovesByRestrictedMovesFilter(_, currentPosition, moveRestriction)).toList
     }
   }
 }
 object Piece {
   def apply(pieceName: String): Validated[InvalidPieceNameException, Piece] = {
     pieceName match {
-      case PieceNames.KING => Validated.valid(King(List(AllMoves)))
-      case PieceNames.QUEEN => Validated.valid(Queen(List(AllMoves)))
+      case PieceNames.KING => Validated.valid(King(List(AllWalks)))
+      case PieceNames.QUEEN => Validated.valid(Queen(List(AllWalks)))
       case _=> Validated.invalid(new InvalidPieceNameException)
     }
   }

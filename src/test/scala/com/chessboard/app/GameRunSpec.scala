@@ -4,8 +4,8 @@ import cats.effect.IO
 import cats.effect.testing.scalatest.AsyncIOSpec
 import com.chessboard.domain.board.{BoardSize, Cell}
 import com.chessboard.domain.errors.{InvalidCellException, InvalidPieceNameException}
-import com.chessboard.domain.moves.AllMoves
 import com.chessboard.domain.pieces.{King, Piece}
+import com.chessboard.domain.walks.AllWalks
 import org.scalatest.freespec.AsyncFreeSpec
 import org.scalatest.matchers.should.Matchers
 class GameRunSpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
@@ -15,7 +15,7 @@ class GameRunSpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
     "should split input string and create a validated piece and cell" in {
       val piece: IO[Piece] = validatedInput.map(_._1)
       val cell = validatedInput.map(_._2)
-      piece.asserting( _ shouldBe King(List(AllMoves)))
+      piece.asserting( _ shouldBe King(List(AllWalks)))
       cell.asserting( _ shouldBe Cell('D', 2))
     }
 

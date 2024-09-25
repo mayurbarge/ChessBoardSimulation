@@ -1,31 +1,31 @@
 package com.chessboard.domain.pieces
 
 import com.chessboard.domain.board.{Board, BoardSize, Cell}
+import com.chessboard.domain.moves.{CompositeMove, SimpleMove}
+import com.chessboard.domain.validations.BoundaryCheckAndSameCellCheckFilter
+import com.chessboard.domain.walks.ComplexWalk
 import com.chessboard.domain.{East, North, South, West}
-import com.chessboard.domain.moves.ComplexMove
-import com.chessboard.domain.validations.{BoundaryCheckAndSameCellCheckFilter, RestrictedMovesFilter}
 import org.scalatest.funspec.AnyFunSpec
-import org.scalatest.funsuite.AnyFunSuiteLike
 import org.scalatest.matchers.should.Matchers
 
 class HorseSpec extends AnyFunSpec with Matchers {
-  val horseMoves = List(ComplexMove(
+  val horseWalks = List(ComplexWalk(
     List(
-      List((North, 2), (East, 1)),
-      List((North, 2), (West, 1)),
+      CompositeMove(List(SimpleMove(North, 2), SimpleMove(East, 1))),
+      CompositeMove(List(SimpleMove(North, 2), SimpleMove(West, 1))),
 
-      List((South, 2), (East, 1)),
-      List((South, 2), (West, 1)),
+      CompositeMove(List(SimpleMove(South, 2), SimpleMove(East, 1))),
+      CompositeMove(List(SimpleMove(South, 2), SimpleMove(West, 1))),
 
-      List((East, 2), (North, 1)),
-      List((East, 2), (South, 1)),
+      CompositeMove(List(SimpleMove(East, 2), SimpleMove(North, 1))),
+      CompositeMove(List(SimpleMove(East, 2), SimpleMove(South, 1))),
 
-      List((West, 2), (North, 1)),
-      List((West, 2), (South, 1)),
+      CompositeMove(List(SimpleMove(West, 2), SimpleMove(North, 1))),
+      CompositeMove(List(SimpleMove(West, 2), SimpleMove(South, 1))),
     )
   ))
 
-  val horse = Horse(horseMoves)
+  val horse = Horse(horseWalks)
   val board = Board(BoardSize(8,8))
   val moveRestrictions = BoundaryCheckAndSameCellCheckFilter(board)
 

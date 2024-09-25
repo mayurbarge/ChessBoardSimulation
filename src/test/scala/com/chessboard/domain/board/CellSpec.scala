@@ -1,6 +1,5 @@
 package com.chessboard.domain.board
 
-import cats.data.Validated
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 class CellSpec extends AnyFunSpec with Matchers {
