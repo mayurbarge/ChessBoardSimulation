@@ -11,8 +11,8 @@ trait Piece { self =>
   def allowedWalks: List[Walk]
 
   protected def getAllMovesByRestrictedMovesFilter(steps: Int, currentPosition: Cell, moveRestriction: RestrictedMovesFilter): List[Cell] = {
-    self.allowedWalks.flatMap(movement =>
-      movement.startWalkAndCheckRestrictedMoves(steps, currentPosition, moveRestriction.run(currentPosition)))
+    self.allowedWalks.flatMap(walk =>
+      walk.startWalkAndCheckRestrictedMoves(steps, currentPosition, moveRestriction.run(currentPosition)))
   }
   def allMovesOnBoard(currentPosition: Cell, board: Board, moveRestriction: RestrictedMovesFilter): List[Cell] = {
     stepType  match {
