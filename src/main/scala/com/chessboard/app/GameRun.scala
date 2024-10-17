@@ -25,7 +25,7 @@ object GameRun {
   def main(args: Array[String]): Unit = {
     val boardSize = BoardSize(8, 8)
     val board = Board(boardSize)
-    val gameConstraints = BoundaryCheckAndSameCellCheckFilter(board)
+    val boundaryCheckFilter = BoundaryCheckAndSameCellCheckFilter(board)
 
     val gameRun =
       for {
@@ -33,7 +33,7 @@ object GameRun {
         pieceAndCell <- splitTokens(boardSize, input)
       } yield {
         val (piece, cell) = pieceAndCell
-        Console[IO].println(piece.allMovesOnBoard(cell, board, gameConstraints).sortBy(e => (e.column, e.row)).mkString(" "))
+        Console[IO].println(piece.allMovesOnBoard(cell, board, List(boundaryCheckFilter)).sortBy(e => (e.column, e.row)).mkString(" "))
       }
     //gameRun.flatten.unsafeRunSync()
 

@@ -11,7 +11,7 @@ class PieceSpec extends AnyFunSpec with Matchers {
 
   describe("A Custom Piece") {
     it("at current position A1 should filter out invalid moves if allowed 1 step movement in all directions to give B1, A2, B2") {
-      validatedKing.map(king => king.allMovesOnBoard(Cell('A', 1), board, BoundaryCheckAndSameCellCheckFilter(board)) should contain theSameElementsAs
+      validatedKing.map(king => king.allMovesOnBoard(Cell('A', 1), board, List(BoundaryCheckAndSameCellCheckFilter(board))) should contain theSameElementsAs
         List(Cell('A', 2), Cell('B', 2), Cell('B', 1))
       )
     }

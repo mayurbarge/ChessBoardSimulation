@@ -1,21 +1,17 @@
 package com.chessboard.domain.walks
 
-import com.chessboard.domain.board.Cell
+import com.chessboard.domain.board.{Board, BoardSize, Cell}
+import com.chessboard.domain.validations.BoundaryCheckAndSameCellCheckFilter
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 
 class VerticalWalkSpec extends AnyFunSpec with Matchers {
-  describe("A Vertical Walk") {
-    describe("With Single Step") {
-      it("should move a piece D3 by 2 place to reach ") {
-        VerticalWalk.startWalk(1, Cell('D', 3)) should contain theSameElementsAs List(Cell('D', 2), Cell('D', 4))
-      }
-    }
+  val boundaryCheckFilter = List(BoundaryCheckAndSameCellCheckFilter(Board(BoardSize(8,8))))
 
-    describe("With Multiple Step") {
-      it("should move a piece F3 by 2 places to reach F1, F5") {
-        VerticalWalk.startWalk(2, Cell('F', 3)) should contain theSameElementsAs List(Cell('F', 1), Cell('F', 5))
-      }
+  describe("A Vertical Walk") {
+    it("should move a piece D3 by 2 place to reach ") {
+      VerticalWalk.startWalkAndCheckRestrictedMoves(8, Cell('D', 3), boundaryCheckFilter) should contain theSameElementsAs
+        List(Cell('D', 1), Cell('D', 2), Cell('D', 4), Cell('D', 5), Cell('D', 6), Cell('D', 7), Cell('D', 8))
     }
   }
 

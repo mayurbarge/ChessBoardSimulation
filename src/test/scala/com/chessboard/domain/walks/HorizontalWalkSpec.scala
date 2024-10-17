@@ -1,22 +1,17 @@
 package com.chessboard.domain.walks
 
-import com.chessboard.domain.board.Cell
+import com.chessboard.domain.board.{Board, BoardSize, Cell}
+import com.chessboard.domain.validations.BoundaryCheckAndSameCellCheckFilter
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers
 
 class HorizontalWalkSpec extends AnyFunSpec with Matchers {
+  val boundaryCheckFilter = List(BoundaryCheckAndSameCellCheckFilter(Board(BoardSize(8,8))))
+
   describe("A Horizontal move") {
-    describe("With Single Step") {
-      it("should reach at C3, E3 when current position is D3 in one step") {
-        HorizontalWalk.startWalk(1, Cell('D', 3)) should contain theSameElementsAs List(Cell('C', 3), Cell('E', 3))
+      it("should find all possible horizontal positions when current position is D3") {
+        HorizontalWalk.startWalkAndCheckRestrictedMoves(8, Cell('D', 3), boundaryCheckFilter) should contain theSameElementsAs
+          List(Cell('A', 3), Cell('B', 3), Cell('C', 3), Cell('E', 3), Cell('F', 3), Cell('G', 3), Cell('H', 3))
       }
     }
-
-    describe("With Multiple Step") {
-      it("should reach at B3, F3 when current position is D3 in 2 steps") {
-        HorizontalWalk.startWalk(2, Cell('D', 3)) should contain theSameElementsAs List(Cell('B', 3), Cell('F', 3))
-      }
-    }
-  }
-
 }

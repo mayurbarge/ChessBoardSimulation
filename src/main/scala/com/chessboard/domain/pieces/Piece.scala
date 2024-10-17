@@ -3,22 +3,21 @@ package com.chessboard.domain.pieces
 import cats.data.Validated
 import com.chessboard.domain.board.{Board, Cell}
 import com.chessboard.domain.errors.InvalidPieceNameException
-import com.chessboard.domain.validations.RestrictedMovesFilter
+import com.chessboard.domain.validations.MoveValidator
 import com.chessboard.domain.walks.{AllWalks, Walk}
 
 trait Piece { self =>
   val stepType: StepType
   def allowedWalks: List[Walk]
 
-  protected def getAllMovesByRestrictedMovesFilter(steps: Int, currentPosition: Cell, moveRestriction: RestrictedMovesFilter): List[Cell] = {
+  protected def getAllMovesByRestrictedMovesFilter(maximumSteps: Int, currentPosition: Cell, moveRestrictions: List[MoveValidator]): List[Cell] = {
     self.allowedWalks.flatMap(walk =>
-      walk.startWalkAndCheckRestrictedMoves(steps, currentPosition, moveRestriction.run(currentPosition)))
+      walk.startWalkAndCheckRestrictedMoves(maximumSteps, currentPosition, moveRestrictions))
   }
-  def allMovesOnBoard(currentPosition: Cell, board: Board, moveRestriction: RestrictedMovesFilter): List[Cell] = {
+  def allMovesOnBoard(currentPosition: Cell, board: Board, moveRestrictions: List[MoveValidator]): List[Cell] = {
     stepType  match {
-      case SingleStep => getAllMovesByRestrictedMovesFilter(1, currentPosition, moveRestriction)
-      case MultiStep => (1 to board.size.maxLength)
-        .flatMap(getAllMovesByRestrictedMovesFilter(_, currentPosition, moveRestriction)).toList
+      case SingleStep => getAllMovesByRestrictedMovesFilter(1, currentPosition, moveRestrictions)
+      case MultiStep => getAllMovesByRestrictedMovesFilter(board.size.maxLength, currentPosition, moveRestrictions)
     }
   }
 }

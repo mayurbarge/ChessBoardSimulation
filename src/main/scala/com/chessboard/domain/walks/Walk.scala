@@ -2,23 +2,34 @@ package com.chessboard.domain.walks
 
 import com.chessboard.domain.board.Cell
 import com.chessboard.domain.moves.{CompositeMove, Move, SimpleMove}
+import com.chessboard.domain.validations.MoveValidator
 
 trait Walk {
   def allowedMoves: List[Move]
-  def startWalk(nthStep: Int, initial: Cell) = {
-    val nextPositionsList = applyMoves(nthStep, allowedMoves)
-    nextPositionsList.map(_(initial))
-  }
 
-  def startWalkAndCheckRestrictedMoves(nthStep: Int, initial: Cell, condition: Cell => Boolean): List[Cell] = {
-    val nextPositions = startWalk(nthStep, initial)
-    nextPositions.filter(condition(_))
+  def startWalkAndCheckRestrictedMoves(maximumSteps: Int, initial: Cell, filters: List[MoveValidator]): List[Cell] = {
+
+    val target = collection.mutable.Stack[Cell]()
+
+    allowedMoves.map( move => {
+      (1 to maximumSteps).takeWhile(step => {
+        val next: Cell = startWalk(move, initial, step)
+        val prevPosition = target.headOption
+
+        if(MoveValidator.validateMoves(initial, next,prevPosition, filters)) {
+          target.push(next)
+          true
+        } else false
+      })
+    })
+    target.toList
   }
-  protected def applyMoves(nthStep: Int, allowedMoves: List[Move]) = {
-    allowedMoves.map {
-      case SimpleMove(direction, steps) => direction.shiftTowardsBy(steps * nthStep)
+  def startWalk(move: Move, initial: Cell, nthStep: Int) = {
+    val nextPosition = move match {
+      case SimpleMove(direction, unitStep) => direction.shiftTowardsBy(unitStep * nthStep)
       case CompositeMove(moves) =>
         moves.map(simpleMove => simpleMove.direction.shiftTowardsBy(simpleMove.steps * nthStep)).reduce(_ andThen _)
     }
+    nextPosition(initial)
   }
 }
