@@ -4,7 +4,8 @@ import com.chessboard.domain.board.{Board, Cell}
 
 case class BoundaryCheckAndSameCellCheckFilter(board: Board)
   extends MoveValidator {
-  def run(previousPosition: Cell)(nextPosition: Cell): Boolean = {
-    CellValidations.validateCell(nextPosition, board.size) && previousPosition != nextPosition
+  def run(position: Cell): Boolean = {
+    CellValidations.validateCell(position, board.size) //&& previousPosition != nextPosition
   }
+
 }

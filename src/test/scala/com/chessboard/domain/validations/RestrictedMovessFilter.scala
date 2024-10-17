@@ -11,15 +11,11 @@ class RestrictedMovesFilterSpec extends AnyFunSpec with Matchers {
   describe("A Restricted Move Filter") {
     describe("A BoundaryChecksFilter Filter") {
       it("should return false when calculated cell is invalid") {
-        BoundaryCheckAndSameCellCheckFilter(board).run(Cell('H', 8))(Cell('H', 9)) shouldBe false
-      }
-
-      it("should return false when cell to filter and current cell is same") {
-        BoundaryCheckAndSameCellCheckFilter(board).run(Cell('A', 1))(Cell('A', 1)) shouldBe false
+        BoundaryCheckAndSameCellCheckFilter(board).run(Cell('H', 9)) shouldBe false
       }
 
       it("should return true when cell is within the bounds of board and not same as the cell to filter") {
-        BoundaryCheckAndSameCellCheckFilter(board).run(Cell('A', 1))(Cell('A', 2)) shouldBe true
+        BoundaryCheckAndSameCellCheckFilter(board).run(Cell('A', 2)) shouldBe true
       }
     }
   }

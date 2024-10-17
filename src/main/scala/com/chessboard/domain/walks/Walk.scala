@@ -16,7 +16,7 @@ trait Walk {
         val next: Cell = startWalk(move, initial, step)
         val prevPosition = target.headOption
 
-        if(MoveValidator.validateMoves(initial, next,prevPosition, filters)) {
+        if(MoveValidator.validateMoves(next,prevPosition, filters)) {
           target.push(next)
           true
         } else false

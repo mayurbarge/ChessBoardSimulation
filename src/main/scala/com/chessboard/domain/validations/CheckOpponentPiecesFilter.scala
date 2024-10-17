@@ -4,7 +4,7 @@ import com.chessboard.domain.pieces.Piece
 
 case class CheckOpponentPiecesFilter(gameState: scala.collection.Map[Piece, Cell]) extends MoveValidator {
 
-  def run(previousPosition: Cell)(nextPosition: Cell): Boolean = {
-      !gameState.values.toList.contains(previousPosition)
+  def run(position: Cell): Boolean = {
+      !gameState.values.toList.contains(position)
   }
 }
